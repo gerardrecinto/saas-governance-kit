@@ -1,0 +1,66 @@
+name: GitHub org audit (reusable)
+
+# Runs the read-only GitHub org audit and the SOC 2 evidence mapping.
+# No OIDC and no cloud credentials: the only secret is a read-only token you provide.
+# GITHUB_TOKEN cannot read org 2FA status or credential authorizations, so pass a fine-grained
+# PAT or GitHub App installation token with read-only organization and repository metadata access.
+
+on:
+  workflow_call:
+    inputs:
+      org:
+        description: GitHub organization to audit
+        required: true
+        type: string
+      kit-ref:
+        description: Ref of saas-governance-kit to install
+        required: false
+        type: string
+        default: main
+      base-url:
+        description: API base URL (set for GitHub Enterprise Server)
+        required: false
+        type: string
+        default: https://api.github.com
+    secrets:
+      audit_token:
+        description: Read-only token for the organization
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: gerardrecinto/saas-governance-kit
+          ref: ${{ inputs.kit-ref }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install .
+      - name: Audit organization
+        env:
+          GITHUB_TOKEN: ${{ secrets.audit_token }}
+          ORG: ${{ inputs.org }}
+          BASE_URL: ${{ inputs.base-url }}
+        run: |
+          github-audit --org "$ORG" --base-url "$BASE_URL" \
+            --out github-report.json --audit-log-out github-audit-log.json
+      - name: SOC 2 evidence mapping
+        run: |
+          soc2-report --github github-report.json --format md --out soc2-evidence.md
+          soc2-report --github github-report.json --format json --out soc2-evidence.json
+          cat soc2-evidence.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: github-org-audit
+          path: |
+            github-report.json
+            github-audit-log.json
+            soc2-evidence.md
+            soc2-evidence.json

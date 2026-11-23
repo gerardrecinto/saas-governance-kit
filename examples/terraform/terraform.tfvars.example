@@ -1,0 +1,9 @@
+github_owner = "example-org"
+
+repositories = {
+  api = { description = "Public API" }
+}
+
+access_groups = {
+  prod-read = ["alice", "bob"]
+}

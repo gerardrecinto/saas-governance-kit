@@ -1,0 +1,88 @@
+{
+  "org": "acme",
+  "generated_at": "2026-11-23T03:56:11Z",
+  "source": "github-rest",
+  "sso": {
+    "status": "enabled",
+    "authorizations": [
+      {
+        "login": "alice",
+        "credential_type": "personal access token",
+        "credential_authorized_at": "2025-11-01T00:00:00Z",
+        "credential_accessed_at": "2026-01-02T00:00:00Z"
+      }
+    ]
+  },
+  "two_factor": {
+    "members_without_2fa": [
+      "bob",
+      "dave"
+    ]
+  },
+  "branch_protection": {
+    "repos": [
+      {
+        "repo": "api",
+        "branch": "main",
+        "protected": true,
+        "source": "branch_protection",
+        "required_reviews": 2,
+        "enforce_admins": true,
+        "required_status_checks": true,
+        "allow_force_pushes": false
+      },
+      {
+        "repo": "web",
+        "branch": "main",
+        "protected": false,
+        "source": null
+      },
+      {
+        "repo": "infra",
+        "branch": "trunk",
+        "protected": true,
+        "source": "ruleset",
+        "required_reviews": 1,
+        "enforce_admins": null,
+        "required_status_checks": false,
+        "allow_force_pushes": false
+      }
+    ]
+  },
+  "outside_collaborators": {
+    "outside_collaborators": [
+      "contractor-1"
+    ]
+  },
+  "audit_log": {
+    "status": "exported",
+    "entries": 2
+  },
+  "findings": [
+    {
+      "id": "GH-2FA-001",
+      "severity": "high",
+      "title": "Members without two-factor authentication",
+      "items": [
+        "bob",
+        "dave"
+      ]
+    },
+    {
+      "id": "GH-BP-001",
+      "severity": "high",
+      "title": "Default branch has no protection",
+      "items": [
+        "web"
+      ]
+    },
+    {
+      "id": "GH-OC-001",
+      "severity": "medium",
+      "title": "Outside collaborators have access",
+      "items": [
+        "contractor-1"
+      ]
+    }
+  ]
+}
