@@ -33,6 +33,7 @@ soc2-report = "saas_governance_kit.soc2.cli:main"
 where = ["src"]
 
 [tool.pytest.ini_options]
+pythonpath = ["tests"]
 testpaths = ["tests"]
 
 [tool.ruff]
