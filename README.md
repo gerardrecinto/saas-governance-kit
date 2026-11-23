@@ -33,7 +33,7 @@ curl -s -X POST localhost:8080/scim/v2/Users \
   -d '{"schemas":["urn:ietf:params:scim:schemas:core:2.0:User"],"userName":"alice@example.com"}'
 ```
 
-Real response (trimmed ids are real values from that run):
+Real response from that run:
 
 ```json
 {
