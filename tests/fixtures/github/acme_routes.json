@@ -1,0 +1,92 @@
+{
+  "/orgs/acme/credential-authorizations": [
+    {
+      "login": "alice",
+      "credential_type": "personal access token",
+      "credential_authorized_at": "2025-11-01T00:00:00Z",
+      "credential_accessed_at": "2026-01-02T00:00:00Z"
+    }
+  ],
+  "/orgs/acme/members?filter=2fa_disabled": [
+    {
+      "login": "bob"
+    },
+    {
+      "login": "dave"
+    }
+  ],
+  "/orgs/acme/repos": [
+    {
+      "name": "api",
+      "default_branch": "main",
+      "archived": false
+    },
+    {
+      "name": "web",
+      "default_branch": "main",
+      "archived": false
+    },
+    {
+      "name": "infra",
+      "default_branch": "trunk",
+      "archived": false
+    },
+    {
+      "name": "old",
+      "default_branch": "main",
+      "archived": true
+    }
+  ],
+  "/repos/acme/api/branches/main/protection": {
+    "required_pull_request_reviews": {
+      "required_approving_review_count": 2
+    },
+    "enforce_admins": {
+      "enabled": true
+    },
+    "required_status_checks": {
+      "contexts": [
+        "ci"
+      ]
+    },
+    "allow_force_pushes": {
+      "enabled": false
+    }
+  },
+  "/repos/acme/web/branches/main/protection": {
+    "__status": 404,
+    "message": "Branch not protected"
+  },
+  "/repos/acme/web/rules/branches/main": [],
+  "/repos/acme/infra/branches/trunk/protection": {
+    "__status": 404,
+    "message": "Branch not protected"
+  },
+  "/repos/acme/infra/rules/branches/trunk": [
+    {
+      "type": "pull_request"
+    },
+    {
+      "type": "non_fast_forward"
+    }
+  ],
+  "/orgs/acme/outside_collaborators": [
+    {
+      "login": "contractor-1"
+    }
+  ],
+  "/orgs/acme/audit-log": [
+    {
+      "@timestamp": 1767225600000,
+      "action": "org.update_member",
+      "actor": "alice",
+      "user": "bob"
+    },
+    {
+      "@timestamp": 1767225700000,
+      "action": "protected_branch.destroy",
+      "actor": "alice",
+      "repo": "acme/web"
+    }
+  ]
+}
