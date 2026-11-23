@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>saas-governance-kit | SAML, SCIM and SOC 2 evidence tooling you can run locally</title>
+<meta name="description" content="Python tooling for SaaS identity and access governance: a SCIM 2.0 server, SAML and OIDC validators, Slack and GitHub org audits, and a SOC 2 evidence mapper. Open source, MIT.">
+<link rel="canonical" href="https://gerardrecinto.github.io/saas-governance-kit/">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#07090e" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f4f5f8" media="(prefers-color-scheme: light)">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gerardrecinto.github.io/saas-governance-kit/">
+<meta property="og:title" content="saas-governance-kit">
+<meta property="og:description" content="A SCIM 2.0 server, SAML and OIDC validators, Slack and GitHub org audits, and a SOC 2 evidence mapper. All runnable and testable locally.">
+<meta property="og:image" content="https://gerardrecinto.github.io/saas-governance-kit/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="saas-governance-kit: identity and access governance tooling with SOC 2 evidence support">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="saas-governance-kit">
+<meta name="twitter:description" content="A SCIM 2.0 server, SAML and OIDC validators, Slack and GitHub org audits, and a SOC 2 evidence mapper. All runnable and testable locally.">
+<meta name="twitter:image" content="https://gerardrecinto.github.io/saas-governance-kit/og-image.png">
+<meta name="twitter:image:alt" content="saas-governance-kit: identity and access governance tooling with SOC 2 evidence support">
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+<script>
+  // Hide-until-reveal only applies when JS runs and motion is allowed.
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  "name": "saas-governance-kit",
+  "description": "Python tooling for SaaS identity and access governance: a SCIM 2.0 server, SAML and OIDC validators, a Slack access-request app and audit log client, a GitHub organization auditor, and a SOC 2 evidence mapper.",
+  "codeRepository": "https://github.com/gerardrecinto/saas-governance-kit",
+  "url": "https://gerardrecinto.github.io/saas-governance-kit/",
+  "programmingLanguage": "Python",
+  "license": "https://opensource.org/licenses/MIT",
+  "author": { "@type": "Person", "name": "Gerard Recinto", "url": "https://github.com/gerardrecinto" }
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="#top"><img src="favicon.svg" alt="" width="28" height="28"><span>saas-governance-kit</span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#flow">Flow</a>
+      <a href="#quick-start">Quick start</a>
+      <a href="#features">Features</a>
+      <a href="#validated">Validated</a>
+      <a href="#links">Links</a>
+    </nav>
+    <a class="btn btn-ghost header-cta" href="https://github.com/gerardrecinto/saas-governance-kit">GitHub</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <p class="eyebrow">Open source, MIT, Python 3.11+</p>
+    <h1 id="hero-title">Test SSO, provisioning and access audits <span class="grad">before they touch production.</span></h1>
+    <p class="lede">A SCIM 2.0 server, SAML and OIDC validators, Slack and GitHub org audits, and a SOC 2 evidence mapper, all runnable and testable on your laptop.</p>
+    <p class="who">For platform, IT and security engineers who run Okta-style federation and want to exercise it, and gather audit evidence, without a vendor tenant.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#quick-start">Quick start</a>
+      <a class="btn btn-ghost" href="https://github.com/gerardrecinto/saas-governance-kit">View on GitHub</a>
+      <a class="badge-link" href="https://github.com/gerardrecinto/saas-governance-kit/actions/workflows/ci.yml" aria-label="CI workflow status on GitHub"><img src="https://github.com/gerardrecinto/saas-governance-kit/actions/workflows/ci.yml/badge.svg" alt="CI status" width="90" height="20"></a>
+    </div>
+    <ul class="pills" aria-label="Covered systems">
+      <li>SAML</li><li>OIDC</li><li>SCIM 2.0</li><li>Slack</li><li>GitHub</li><li>SOC 2 evidence</li>
+    </ul>
+  </section>
+
+  <section class="panel reveal" id="flow" aria-labelledby="flow-title">
+    <div class="sec-head">
+      <p class="eyebrow">How it fits together</p>
+      <h2 id="flow-title">From identity provider to audit evidence</h2>
+      <p class="lede">SSO and provisioning are separate paths out of your IdP. Each produces events or state that the audit tools and the SOC 2 mapper read.</p>
+    </div>
+    <div class="flow-wrap">
+      <svg class="flow flow-wide" viewBox="0 0 1000 380" role="img" aria-labelledby="fw-t fw-d">
+        <title id="fw-t">Flow from IdP to SOC 2 evidence</title>
+        <desc id="fw-d">The IdP sends SSO assertions to the SAML and OIDC validators and provisioning calls to the SCIM server. The validators send auth events and the SCIM server sends its JSON store to the SOC 2 mapper. The Slack audit log client and the GitHub org audit CLI also feed the SOC 2 mapper, which writes Markdown or JSON evidence.</desc>
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z"/></marker>
+        </defs>
+        <g>
+          <path class="edge" marker-end="url(#ar)" d="M150 190 C185 190 175 73 210 73"/>
+          <path class="edge" marker-end="url(#ar)" d="M150 190 C185 190 175 307 210 307"/>
+          <path class="edge" marker-end="url(#ar)" d="M400 73 H860 V140"/>
+          <path class="edge" marker-end="url(#ar)" d="M400 307 H860 V240"/>
+          <path class="edge" marker-end="url(#ar)" d="M640 135 C690 135 690 170 740 170"/>
+          <path class="edge" marker-end="url(#ar)" d="M640 245 C690 245 690 210 740 210"/>
+          <path class="flowdash" d="M150 190 C185 190 175 73 210 73"/>
+          <path class="flowdash" d="M150 190 C185 190 175 307 210 307"/>
+          <path class="flowdash" d="M400 73 H860 V140"/>
+          <path class="flowdash" d="M400 307 H860 V240"/>
+          <path class="flowdash" d="M640 135 C690 135 690 170 740 170"/>
+          <path class="flowdash" d="M640 245 C690 245 690 210 740 210"/>
+        </g>
+        <text class="t-edge" x="204" y="150">SSO</text>
+        <text class="t-edge" x="204" y="236">provisioning</text>
+        <text class="t-edge" x="640" y="62" text-anchor="middle">--auth-events</text>
+        <text class="t-edge" x="640" y="330" text-anchor="middle">--scim-store</text>
+        <g>
+          <rect class="node" x="20" y="150" width="130" height="80" rx="16"/>
+          <rect class="lit" style="--d:0s" x="20" y="150" width="130" height="80" rx="16"/>
+          <text class="t-title" x="85" y="187" text-anchor="middle">Okta / IdP</text>
+          <text class="t-sub" x="85" y="208" text-anchor="middle">your IdP</text>
+        </g>
+        <g>
+          <rect class="node" x="210" y="30" width="190" height="86" rx="16"/>
+          <rect class="lit" style="--d:1s" x="210" y="30" width="190" height="86" rx="16"/>
+          <text class="t-title" x="305" y="64" text-anchor="middle">SAML / OIDC validation</text>
+          <text class="t-sub" x="305" y="85" text-anchor="middle">signature, audience,</text>
+          <text class="t-sub" x="305" y="101" text-anchor="middle">replay, alg allowlist</text>
+        </g>
+        <g>
+          <rect class="node" x="210" y="264" width="190" height="86" rx="16"/>
+          <rect class="lit" style="--d:1s" x="210" y="264" width="190" height="86" rx="16"/>
+          <text class="t-title" x="305" y="298" text-anchor="middle">SCIM 2.0 provisioning</text>
+          <text class="t-sub" x="305" y="319" text-anchor="middle">Users, Groups, PATCH,</text>
+          <text class="t-sub" x="305" y="335" text-anchor="middle">deprovision to inactive</text>
+        </g>
+        <g>
+          <rect class="node" x="470" y="100" width="170" height="70" rx="16"/>
+          <rect class="lit" style="--d:2s" x="470" y="100" width="170" height="70" rx="16"/>
+          <text class="t-title" x="555" y="130" text-anchor="middle">Slack audit logs</text>
+          <text class="t-sub" x="555" y="150" text-anchor="middle">cursor paging, 429 retry</text>
+        </g>
+        <g>
+          <rect class="node" x="470" y="210" width="170" height="70" rx="16"/>
+          <rect class="lit" style="--d:2s" x="470" y="210" width="170" height="70" rx="16"/>
+          <text class="t-title" x="555" y="240" text-anchor="middle">GitHub org audit</text>
+          <text class="t-sub" x="555" y="260" text-anchor="middle">2FA, branches, outside users</text>
+        </g>
+        <g>
+          <rect class="node-end" x="740" y="140" width="240" height="100" rx="18"/>
+          <rect class="lit" style="--d:3.2s" x="740" y="140" width="240" height="100" rx="18"/>
+          <text class="t-title" x="860" y="180" text-anchor="middle">SOC 2 evidence</text>
+          <text class="t-sub" x="860" y="201" text-anchor="middle">CC6.1 CC6.2 CC6.3 CC7.2 CC8.1</text>
+          <text class="t-sub" x="860" y="219" text-anchor="middle">Markdown or JSON</text>
+        </g>
+      </svg>
+
+      <svg class="flow flow-tall" viewBox="0 0 340 640" role="img" aria-labelledby="ft-t ft-d">
+        <title id="ft-t">Flow from IdP to SOC 2 evidence</title>
+        <desc id="ft-d">The IdP sends SSO assertions to the SAML and OIDC validators and provisioning calls to the SCIM server. The validators and the SCIM server feed the SOC 2 mapper, as do the Slack audit log client and the GitHub org audit CLI.</desc>
+        <defs>
+          <marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z"/></marker>
+        </defs>
+        <g>
+          <path class="edge" marker-end="url(#ar2)" d="M135 70 C135 95 85 95 85 120"/>
+          <path class="edge" marker-end="url(#ar2)" d="M205 70 C205 95 255 95 255 120"/>
+          <path class="edge" marker-end="url(#ar2)" d="M16 200 V500"/>
+          <path class="edge" marker-end="url(#ar2)" d="M324 200 V500"/>
+          <path class="edge" marker-end="url(#ar2)" d="M100 350 C100 400 130 420 150 500"/>
+          <path class="edge" marker-end="url(#ar2)" d="M240 350 C240 400 210 420 190 500"/>
+          <path class="flowdash" d="M135 70 C135 95 85 95 85 120"/>
+          <path class="flowdash" d="M205 70 C205 95 255 95 255 120"/>
+          <path class="flowdash" d="M16 200 V500"/>
+          <path class="flowdash" d="M324 200 V500"/>
+          <path class="flowdash" d="M100 350 C100 400 130 420 150 500"/>
+          <path class="flowdash" d="M240 350 C240 400 210 420 190 500"/>
+        </g>
+        <text class="t-edge" x="24" y="236">auth events</text>
+        <text class="t-edge" x="316" y="236" text-anchor="end">scim store</text>
+        <g>
+          <rect class="node" x="95" y="10" width="150" height="60" rx="14"/>
+          <rect class="lit" style="--d:0s" x="95" y="10" width="150" height="60" rx="14"/>
+          <text class="t-title" x="170" y="46" text-anchor="middle">Okta / IdP</text>
+        </g>
+        <g>
+          <rect class="node" x="30" y="120" width="140" height="80" rx="14"/>
+          <rect class="lit" style="--d:1s" x="30" y="120" width="140" height="80" rx="14"/>
+          <text class="t-title" x="100" y="150" text-anchor="middle">SAML / OIDC</text>
+          <text class="t-sub" x="100" y="170" text-anchor="middle">validation</text>
+        </g>
+        <g>
+          <rect class="node" x="190" y="120" width="120" height="80" rx="14"/>
+          <rect class="lit" style="--d:1s" x="190" y="120" width="120" height="80" rx="14"/>
+          <text class="t-title" x="250" y="150" text-anchor="middle">SCIM 2.0</text>
+          <text class="t-sub" x="250" y="170" text-anchor="middle">provisioning</text>
+        </g>
+        <g>
+          <rect class="node" x="34" y="270" width="132" height="80" rx="14"/>
+          <rect class="lit" style="--d:2s" x="34" y="270" width="132" height="80" rx="14"/>
+          <text class="t-title" x="100" y="304" text-anchor="middle">Slack audit</text>
+          <text class="t-sub" x="100" y="324" text-anchor="middle">logs</text>
+        </g>
+        <g>
+          <rect class="node" x="174" y="270" width="132" height="80" rx="14"/>
+          <rect class="lit" style="--d:2s" x="174" y="270" width="132" height="80" rx="14"/>
+          <text class="t-title" x="240" y="304" text-anchor="middle">GitHub org</text>
+          <text class="t-sub" x="240" y="324" text-anchor="middle">audit</text>
+        </g>
+        <g>
+          <rect class="node-end" x="16" y="504" width="308" height="110" rx="18"/>
+          <rect class="lit" style="--d:3.2s" x="16" y="504" width="308" height="110" rx="18"/>
+          <text class="t-title" x="170" y="548" text-anchor="middle">SOC 2 evidence</text>
+          <text class="t-sub" x="170" y="570" text-anchor="middle">CC6.1 CC6.2 CC6.3 CC7.2 CC8.1</text>
+          <text class="t-sub" x="170" y="588" text-anchor="middle">Markdown or JSON</text>
+        </g>
+      </svg>
+    </div>
+    <p class="flow-legend">Based on the architecture section of the README. The Slack access-request app is not drawn: it approves requests and adds the requester to a SCIM group.</p>
+  </section>
+
+  <section class="panel reveal" id="quick-start" aria-labelledby="qs-title">
+    <div class="sec-head">
+      <p class="eyebrow">Quick start</p>
+      <h2 id="qs-title">Run it in a few commands</h2>
+      <p class="lede">Commands are copied from the README. Python 3.11 or newer.</p>
+    </div>
+    <div class="steps">
+      <div>
+        <h3>Install and run the tests</h3>
+        <div class="code">
+          <div class="code-bar"><span>bash</span><button class="copy" type="button" data-target="cmd-install" hidden>Copy</button></div>
+<pre><code id="cmd-install">python -m venv .venv &amp;&amp; . .venv/bin/activate
+pip install -e ".[dev]"
+pytest -q
+ruff check .</code></pre>
+        </div>
+        <p class="out">Output from a real run in the README: <code>88 passed, 1 warning in 1.75s</code> and <code>All checks passed!</code></p>
+      </div>
+      <div>
+        <h3>Run the SCIM server</h3>
+        <div class="code">
+          <div class="code-bar"><span>bash</span><button class="copy" type="button" data-target="cmd-scim" hidden>Copy</button></div>
+<pre><code id="cmd-scim">export SCIM_BEARER_TOKEN=demo-token
+scim-server --port 8080 --store ./scim-data.json &amp;
+
+curl -s -X POST localhost:8080/scim/v2/Users \
+  -H 'Authorization: Bearer demo-token' -H 'Content-Type: application/scim+json' \
+  -d '{"schemas":["urn:ietf:params:scim:schemas:core:2.0:User"],"userName":"alice@example.com"}'</code></pre>
+        </div>
+        <p class="out">The README shows the created user back with <code>"active": true</code>. A request without the token returns <code>401</code>.</p>
+      </div>
+      <div>
+        <h3>Audit a GitHub org and produce SOC 2 evidence (offline fixtures)</h3>
+        <div class="code">
+          <div class="code-bar"><span>bash</span><button class="copy" type="button" data-target="cmd-audit" hidden>Copy</button></div>
+<pre><code id="cmd-audit">github-audit --org acme --offline-fixtures tests/fixtures/github/acme_routes.json --out gh.json
+soc2-report --github gh.json --slack-audit slack.json --scim-store scim-data.json --format md</code></pre>
+        </div>
+        <p class="out">Run from a repo checkout. <code>slack.json</code> comes from <code>slack-audit-logs</code> and needs <code>SLACK_AUDIT_TOKEN</code>. Against a real org, drop <code>--offline-fixtures</code> and set <code>GITHUB_TOKEN</code> to a read-only token.</p>
+      </div>
+    </div>
+    <p id="copy-status" role="status" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"></p>
+  </section>
+
+  <section class="panel reveal" id="features" aria-labelledby="feat-title">
+    <div class="sec-head">
+      <p class="eyebrow">What is in the box</p>
+      <h2 id="feat-title">What is in the repo</h2>
+      <p class="lede">Each part has its own tests and runs without a vendor account.</p>
+    </div>
+    <ul class="grid">
+      <li class="card reveal" style="--reveal-delay:0ms"><h3><span class="ic" aria-hidden="true">SC</span>SCIM 2.0 server</h3><p>RFC 7643 and 7644 subset: Users, Groups, PATCH add, replace and remove, filters, pagination, constant-time bearer check, 409 on duplicate userName. Deprovision sets <code>active: false</code>.</p><code class="path">src/saas_governance_kit/scim</code></li>
+      <li class="card reveal" style="--reveal-delay:70ms"><h3><span class="ic" aria-hidden="true">SA</span>SAML SP validator</h3><p>Verifies signatures against a pinned IdP cert and checks Audience, Destination, Recipient, InResponseTo and validity window with skew. Keeps a replay cache. Rejects unsigned, multiple assertions, duplicate IDs and DOCTYPE.</p><code class="path">.../saml/validator.py</code></li>
+      <li class="card reveal" style="--reveal-delay:140ms"><h3><span class="ic" aria-hidden="true">OI</span>OIDC validator</h3><p>JWKS with kid rotation refresh, algorithm allowlist, rejects <code>none</code> and HS* confusion, and checks iss, aud, azp, exp, iat and nonce.</p><code class="path">.../oidc/validator.py</code></li>
+      <li class="card reveal" style="--reveal-delay:0ms"><h3><span class="ic" aria-hidden="true">SL</span>Slack access request</h3><p><code>/access-request &lt;group&gt; &lt;reason&gt;</code> with Approve and Deny buttons, an approver allowlist and no self-approval. Approval adds the requester to a SCIM group. Requests are verified with Slack v0 signing.</p><code class="path">.../slack/access_request.py</code></li>
+      <li class="card reveal" style="--reveal-delay:70ms"><h3><span class="ic" aria-hidden="true">GH</span>GitHub org audit</h3><p>Flags SAML credential authorizations, members without two-factor, unprotected default branches and outside collaborators. Ships a reusable workflow with a read-only token.</p><code class="path">.../github/</code></li>
+      <li class="card reveal" style="--reveal-delay:140ms"><h3><span class="ic" aria-hidden="true">S2</span>SOC 2 mapping</h3><p>Maps findings to CC6.1, CC6.2, CC6.3, CC7.2 and CC8.1 and writes Markdown or JSON. Evidence support only.</p><code class="path">.../soc2/</code></li>
+    </ul>
+    <p class="out">Also in the repo: Slack Audit Logs client (<code>slack-audit-logs</code>), a Terraform example that is only formatted and validated, a Dockerfile for the SCIM server, and CI.</p>
+  </section>
+
+  <section class="panel reveal" id="validated" aria-labelledby="val-title">
+    <div class="sec-head">
+      <p class="eyebrow">Be clear about what is proven</p>
+      <h2 id="val-title">Validated vs not validated</h2>
+      <p class="lede">Nothing here has been run against a real Okta tenant, Slack Enterprise Grid or GitHub Enterprise. The fixtures were written by hand to match documented API shapes. They are not captures from a real tenant.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <caption>Copied from the README section "What is tested vs not tested".</caption>
+        <thead><tr><th scope="col">Area</th><th scope="col">Tested here</th><th scope="col">Not tested</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">SCIM server</th><td class="yes" data-label="Tested here">15 pytest cases over FastAPI TestClient, including an Okta-style PATCH and a JSON-file store reload; a manual curl run and a Docker smoke test</td><td class="no" data-label="Not tested">Real Okta, Entra ID or any IdP provisioning connector; interop with vendor SCIM quirks beyond the Okta-style payload</td></tr>
+          <tr><th scope="row">SAML validator</th><td class="yes" data-label="Tested here">23 cases with a self-generated test IdP key and cert: valid, unsigned, tampered, wrong key, expired, skew, audience, destination, InResponseTo, replay, wrapping, DOCTYPE</td><td class="no" data-label="Not tested">Any real IdP's metadata or signatures; encrypted assertions (rejected, not supported); SP-initiated AuthnRequest generation; logout</td></tr>
+          <tr><th scope="row">OIDC validator</th><td class="yes" data-label="Tested here">22 cases with locally generated RSA and EC keys, including <code>none</code>, HS256 confusion, kid rotation</td><td class="no" data-label="Not tested">A real provider's discovery document and JWKS over the network</td></tr>
+          <tr><th scope="row">Slack access request</th><td class="yes" data-label="Tested here">Handler unit tests with fake clients, SCIM client over a mock transport, Bolt dispatch against a local fake Slack Web API with signature checks</td><td class="no" data-label="Not tested">Real Slack workspace, real tokens, interactive button payloads from Slack, Enterprise Grid</td></tr>
+          <tr><th scope="row">Slack audit logs</th><td class="yes" data-label="Tested here">7 cases against hand-written fixtures that follow the documented response shape; 429 and cursor handling via mock transport</td><td class="no" data-label="Not tested">The live Audit Logs API on a real Enterprise Grid org; real action names beyond the few used</td></tr>
+          <tr><th scope="row">GitHub audit</th><td class="yes" data-label="Tested here">7 cases against fixtures and a mock transport, including Link pagination and rate-limit backoff</td><td class="no" data-label="Not tested">A real GitHub Enterprise org or GHES; SSO enforcement (not readable via REST, only credential authorizations are checked)</td></tr>
+          <tr><th scope="row">SOC 2 mapping</th><td class="yes" data-label="Tested here">4 cases on fixture-derived input</td><td class="no" data-label="Not tested">Any auditor review; mapping choices are the author's and are not an auditor-approved control matrix</td></tr>
+          <tr><th scope="row">Terraform</th><td class="yes" data-label="Tested here"><code>terraform fmt -check</code>, <code>terraform init -backend=false</code>, <code>terraform validate</code></td><td class="no" data-label="Not tested"><code>plan</code> and <code>apply</code> (never run); behavior of the community Slack provider</td></tr>
+          <tr><th scope="row">Reusable workflow</th><td class="yes" data-label="Tested here">YAML written and reviewed</td><td class="no" data-label="Not tested">Not yet run against a real org</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <p><strong>SOC 2 output is evidence support.</strong> It is not a SOC 2 report, an attestation, a certification or a compliance claim. Whether a control is designed and operating effectively is for an auditor to decide.</p>
+      <p>Security notes: the SCIM server uses one static bearer token, so put it behind TLS. The SAML replay cache is in memory, so use a shared store if you run more than one instance.</p>
+    </div>
+  </section>
+
+  <section class="panel reveal" id="links" aria-labelledby="links-title">
+    <div class="sec-head">
+      <p class="eyebrow">Go deeper</p>
+      <h2 id="links-title">Repo, CI and runbook</h2>
+    </div>
+    <div class="links">
+      <a class="link-card" href="https://github.com/gerardrecinto/saas-governance-kit"><strong>Repository</strong><span>Source, issues and the full README.</span></a>
+      <a class="link-card" href="https://github.com/gerardrecinto/saas-governance-kit/actions/workflows/ci.yml"><strong>CI workflow</strong><span>Tests and lint on Python 3.11 and 3.12, Terraform validate and a Docker build.</span></a>
+      <a class="link-card" href="https://github.com/gerardrecinto/saas-governance-kit/blob/main/docs/RUNBOOK.md"><strong>docs/RUNBOOK.md</strong><span>Troubleshooting for SAML, OIDC and SCIM federation errors.</span></a>
+      <a class="link-card" href="https://github.com/gerardrecinto/saas-governance-kit/blob/main/SECURITY.md"><strong>SECURITY.md</strong><span>How to report a vulnerability, and the scope caveats.</span></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>MIT licensed. Built by <a href="https://github.com/gerardrecinto">Gerard Recinto</a>.</span>
+  <a href="https://github.com/gerardrecinto/saas-governance-kit/blob/main/LICENSE">License</a>
+</footer>
+<script src="app.js" defer></script>
+</body>
+</html>
