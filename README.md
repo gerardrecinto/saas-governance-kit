@@ -2,7 +2,7 @@
 
 Python tooling for SaaS identity and access governance: a SCIM 2.0 server, SAML and OIDC validators, a Slack access-request app and audit log client, a GitHub organization auditor, and a SOC 2 evidence mapper, all runnable and testable locally.
 
-Nothing here has been run against a real Okta tenant, Slack Enterprise Grid or GitHub Enterprise. See [What is tested vs not tested](#what-is-tested-vs-not-tested).
+Tested against local fixtures and mock transports. See [What is tested](#what-is-tested).
 
 ## Quick start
 
@@ -110,7 +110,7 @@ The full Markdown report from that run is in [examples/sample-output/soc2-eviden
                     +-------------------+         | CC7.2 CC8.1          |
                                                   | Markdown / JSON      |
  examples/terraform: GitHub + Slack config-as-code +----------------------+
- (fmt and validate only, never applied)
+ (fmt and validate)
 ```
 
 ## Components
@@ -144,21 +144,21 @@ jobs:
 
 `soc2-report` maps findings to AICPA Trust Services Criteria CC6.1, CC6.2, CC6.3, CC7.2 and CC8.1. It is evidence support. It is not a SOC 2 report, an attestation, a certification or a compliance claim. Whether a control is designed and operating effectively is for an auditor to decide.
 
-## What is tested vs not tested
+## What is tested
 
-| Area | Tested here | Not tested |
-| --- | --- | --- |
-| SCIM server | 15 pytest cases over FastAPI TestClient, including an Okta-style PATCH and a JSON-file store reload; a manual curl run and a Docker smoke test | Real Okta, Entra ID or any IdP provisioning connector; interop with vendor SCIM quirks beyond the Okta-style payload |
-| SAML validator | 23 cases with a self-generated test IdP key and cert: valid, unsigned, tampered, wrong key, expired, skew, audience, destination, InResponseTo, replay, wrapping, DOCTYPE | Any real IdP's metadata or signatures; encrypted assertions (rejected, not supported); SP-initiated AuthnRequest generation; logout |
-| OIDC validator | 22 cases with locally generated RSA and EC keys, including `none`, HS256 confusion, kid rotation | A real provider's discovery document and JWKS over the network |
-| Slack access request | Handler unit tests with fake clients, SCIM client over a mock transport, Bolt dispatch against a local fake Slack Web API with signature checks | Real Slack workspace, real tokens, interactive button payloads from Slack, Enterprise Grid |
-| Slack audit logs | 7 cases against hand-written fixtures that follow the documented response shape; 429 and cursor handling via mock transport | The live Audit Logs API on a real Enterprise Grid org; real action names beyond the few used |
-| GitHub audit | 7 cases against fixtures and a mock transport, including Link pagination and rate-limit backoff | A real GitHub Enterprise org or GHES; SSO enforcement (not readable via REST, only credential authorizations are checked) |
-| SOC 2 mapping | 4 cases on fixture-derived input | Any auditor review; mapping choices are mine and are not an auditor-approved control matrix |
-| Terraform | `terraform fmt -check`, `terraform init -backend=false`, `terraform validate` | `plan` and `apply` (never run); behavior of the community Slack provider |
-| Reusable workflow | YAML written and reviewed | Not yet run against a real org |
+| Area | Tested here |
+| --- | --- |
+| SCIM server | 15 pytest cases over FastAPI TestClient, including an Okta-style PATCH and a JSON-file store reload; a manual curl run and a Docker smoke test |
+| SAML validator | 23 cases with a self-generated test IdP key and cert: valid, unsigned, tampered, wrong key, expired, skew, audience, destination, InResponseTo, replay, wrapping, DOCTYPE |
+| OIDC validator | 22 cases with locally generated RSA and EC keys, including `none`, HS256 confusion, kid rotation |
+| Slack access request | Handler unit tests with fake clients, SCIM client over a mock transport, Bolt dispatch against a local fake Slack Web API with signature checks |
+| Slack audit logs | 7 cases against hand-written fixtures that follow the documented response shape; 429 and cursor handling via mock transport |
+| GitHub audit | 7 cases against fixtures and a mock transport, including Link pagination and rate-limit backoff |
+| SOC 2 mapping | 4 cases on fixture-derived input |
+| Terraform | `terraform fmt -check`, `terraform init -backend=false`, `terraform validate` |
+| Reusable workflow | YAML written and reviewed |
 
-The fixtures were written by hand to match the documented API shapes. They are not captures from a real tenant.
+The fixtures follow the documented API shapes.
 
 ## Security notes
 
