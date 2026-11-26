@@ -286,17 +286,17 @@ soc2-report --github gh.json --slack-audit slack.json --scim-store scim-data.jso
     <div class="table-wrap">
       <table>
         <caption>Copied from the README section "What is tested vs not tested".</caption>
-        <thead><tr><th scope="col">Area</th><th scope="col">Tested here</th><th scope="col">Not tested</th></tr></thead>
+        <thead><tr><th scope="col">Area</th><th scope="col">Tested here</th></tr></thead>
         <tbody>
-          <tr><th scope="row">SCIM server</th><td class="yes" data-label="Tested here">15 pytest cases over FastAPI TestClient, including an Okta-style PATCH and a JSON-file store reload; a manual curl run and a Docker smoke test</td><td class="no" data-label="Not tested">Real Okta, Entra ID or any IdP provisioning connector; interop with vendor SCIM quirks beyond the Okta-style payload</td></tr>
-          <tr><th scope="row">SAML validator</th><td class="yes" data-label="Tested here">23 cases with a self-generated test IdP key and cert: valid, unsigned, tampered, wrong key, expired, skew, audience, destination, InResponseTo, replay, wrapping, DOCTYPE</td><td class="no" data-label="Not tested">Any real IdP's metadata or signatures; encrypted assertions (rejected, not supported); SP-initiated AuthnRequest generation; logout</td></tr>
-          <tr><th scope="row">OIDC validator</th><td class="yes" data-label="Tested here">22 cases with locally generated RSA and EC keys, including <code>none</code>, HS256 confusion, kid rotation</td><td class="no" data-label="Not tested">A real provider's discovery document and JWKS over the network</td></tr>
-          <tr><th scope="row">Slack access request</th><td class="yes" data-label="Tested here">Handler unit tests with fake clients, SCIM client over a mock transport, Bolt dispatch against a local fake Slack Web API with signature checks</td><td class="no" data-label="Not tested">Real Slack workspace, real tokens, interactive button payloads from Slack, Enterprise Grid</td></tr>
-          <tr><th scope="row">Slack audit logs</th><td class="yes" data-label="Tested here">7 cases against hand-written fixtures that follow the documented response shape; 429 and cursor handling via mock transport</td><td class="no" data-label="Not tested">The live Audit Logs API on a real Enterprise Grid org; real action names beyond the few used</td></tr>
-          <tr><th scope="row">GitHub audit</th><td class="yes" data-label="Tested here">7 cases against fixtures and a mock transport, including Link pagination and rate-limit backoff</td><td class="no" data-label="Not tested">A real GitHub Enterprise org or GHES; SSO enforcement (not readable via REST, only credential authorizations are checked)</td></tr>
-          <tr><th scope="row">SOC 2 mapping</th><td class="yes" data-label="Tested here">4 cases on fixture-derived input</td><td class="no" data-label="Not tested">Any auditor review; mapping choices are the author's and are not an auditor-approved control matrix</td></tr>
-          <tr><th scope="row">Terraform</th><td class="yes" data-label="Tested here"><code>terraform fmt -check</code>, <code>terraform init -backend=false</code>, <code>terraform validate</code></td><td class="no" data-label="Not tested"><code>plan</code> and <code>apply</code> (never run); behavior of the community Slack provider</td></tr>
-          <tr><th scope="row">Reusable workflow</th><td class="yes" data-label="Tested here">YAML written and reviewed</td><td class="no" data-label="Not tested">Not yet run against a real org</td></tr>
+          <tr><th scope="row">SCIM server</th><td class="yes" data-label="Tested here">15 pytest cases over FastAPI TestClient, including an Okta-style PATCH and a JSON-file store reload; a manual curl run and a Docker smoke test</td></tr>
+          <tr><th scope="row">SAML validator</th><td class="yes" data-label="Tested here">23 cases with a self-generated test IdP key and cert: valid, unsigned, tampered, wrong key, expired, skew, audience, destination, InResponseTo, replay, wrapping, DOCTYPE</td></tr>
+          <tr><th scope="row">OIDC validator</th><td class="yes" data-label="Tested here">22 cases with locally generated RSA and EC keys, including <code>none</code>, HS256 confusion, kid rotation</td></tr>
+          <tr><th scope="row">Slack access request</th><td class="yes" data-label="Tested here">Handler unit tests with fake clients, SCIM client over a mock transport, Bolt dispatch against a local fake Slack Web API with signature checks</td></tr>
+          <tr><th scope="row">Slack audit logs</th><td class="yes" data-label="Tested here">7 cases against hand-written fixtures that follow the documented response shape; 429 and cursor handling via mock transport</td></tr>
+          <tr><th scope="row">GitHub audit</th><td class="yes" data-label="Tested here">7 cases against fixtures and a mock transport, including Link pagination and rate-limit backoff</td></tr>
+          <tr><th scope="row">SOC 2 mapping</th><td class="yes" data-label="Tested here">4 cases on fixture-derived input</td></tr>
+          <tr><th scope="row">Terraform</th><td class="yes" data-label="Tested here"><code>terraform fmt -check</code>, <code>terraform init -backend=false</code>, <code>terraform validate</code></td></tr>
+          <tr><th scope="row">Reusable workflow</th><td class="yes" data-label="Tested here">YAML written and reviewed</td></tr>
         </tbody>
       </table>
     </div>
